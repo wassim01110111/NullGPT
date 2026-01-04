@@ -47,55 +47,55 @@ url_cats = {
         "exact_chapter": None,
         "chapter_range": None,
     },
-    "organizations":{
+    "organizations": {
         "url": "Category:Organizations",
         "exact_chapter": None,
         "chapter_range": None,
         "exclusions": set(),
     },
-    "items":{
+    "items": {
         "url": "Category:Items",
         "exact_chapter": None,
         "chapter_range": None,
         "exclusions": set(),
     },
-    "terminology":{
+    "terminology": {
         "url": "Category:Terminology",
         "exact_chapter": None,
         "chapter_range": None,
         "exclusions": set(),
     },
-    "locations":{
+    "locations": {
         "url": "Category:Location",
         "exact_chapter": None,
         "chapter_range": None,
         "exclusions": set(),
     },
-    "characters":{
+    "characters": {
         "url": "Category:Characters",
         "exact_chapter": None,
         "chapter_range": None,
         "exclusions": set(),
     },
-    "book_one_content":{
+    "book_one_content": {
         "url": "Category:Book_One_Content",
         "exact_chapter": end_sidestories,
         "chapter_range": None,
         "exclusions": set(),
     },
-    "book_two_content":{
+    "book_two_content": {
         "url": "Category:Book_Two_Content",
         "exact_chapter": end_coi,
         "chapter_range": None,
         "exclusions": set(),
     },
-    "alive":{
+    "alive": {
         "url": "Category:Alive",
         "exact_chapter": end_coi,
         "chapter_range": None,
         "exclusions": set(),
     },
-    "deceased":{
+    "deceased": {
         "url": "Category:Deceased",
         "exact_chapter": end_coi,
         "chapter_range": None,
@@ -199,7 +199,7 @@ def url_cleaning(url):
 
 def get_category_member(url, info):
     try:
-        response = requests.get(url)
+        response = requests.get(base_url + url)
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, "html.parser")
