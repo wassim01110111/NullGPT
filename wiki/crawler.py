@@ -1,9 +1,11 @@
 import json
 import traceback
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
 
+url_list_path = Path(__file__).resolve().parent / "url_list.json"
 end_lotm = 1394
 lotm_timestamps = [213, 482, 732, 946, 1150, 1266, 1353, end_lotm]
 end_sidestories = 1445
@@ -178,7 +180,7 @@ specific_urls = {
 # keeping track of the urls scraped to avoid duplicates and time loss
 went_through = set()
 error_urls = set()
-with open("url_list.json", "r", encoding="utf-8") as f:
+with open(url_list_path, "r", encoding="utf-8") as f:
     url_list = json.load(f) | specific_urls
 
 
@@ -236,5 +238,5 @@ for cat in url_cats:
         },
     )
 
-with open("url_list.json", "w", encoding="utf-8") as f:
+with open(url_list_path, "w", encoding="utf-8") as f:
     json.dump(url_list, f, ensure_ascii=False, indent=2)
