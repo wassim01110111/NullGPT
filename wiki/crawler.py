@@ -1,3 +1,4 @@
+import json
 from urllib.parse import urlparse
 
 end_lotm = 1394
@@ -45,6 +46,10 @@ url_cats = {
 }
 
 exclusion_urls = set()  # urls that shouldn't get scraped
+with open("url_list.json", "r", encoding="utf-8") as f:
+    url_list = json.load(f)
+
+
 specific_urls = {
     "An_Ordinary_Person%27s_Daily_Life_(Side_Story)": {
         "exact_chapter": end_sidestories,
