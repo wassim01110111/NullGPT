@@ -187,6 +187,7 @@ def url_list_update(url, info):
 
 
 def get_category_member(url, info):
+    print(f"Going through {url}")
     try:
         response = requests.get(base_url + url)
         response.raise_for_status()
