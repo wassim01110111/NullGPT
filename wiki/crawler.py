@@ -64,7 +64,7 @@ url_cats = {
         "chapter_range": None,
     },
     "locations": {
-        "url": "Category:Location",
+        "url": "Category:Locations",
         "exact_chapter": None,
         "chapter_range": None,
     },
@@ -188,6 +188,10 @@ def url_list_update(url, info):
     url_list[url] = info
 
 
+def not_prefixed(url):
+    return not url.startswith(("User:", "Template:", "File:"))
+
+
 def get_category_member(url, info):
     print(f"Going through {url}, there are {len(url_list)} links so far")
     try:
@@ -204,7 +208,7 @@ def get_category_member(url, info):
                     went_through.add(link_href)
                     if link_href.startswith("Category:"):
                         get_category_member(url=link_href, info=info)
-                    else:
+                    elif not_prefixed(link_href):
                         url_list_update(url=link_href, info=info)
 
         next_page = soup.find(
@@ -229,6 +233,7 @@ def get_category_member(url, info):
 for url in specific_urls:
     went_through.add(url)
 
+
 for cat in url_cats:
     cat_url = url_cats[cat]["url"]
     went_through.add(cat_url)
@@ -242,3 +247,6 @@ for cat in url_cats:
 
 with open(url_list_path, "w", encoding="utf-8") as f:
     json.dump(url_list, f, ensure_ascii=False, indent=2)
+
+for e_url in error_urls:
+    print(e_url)

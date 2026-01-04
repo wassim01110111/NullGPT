@@ -1,9 +1,11 @@
 import traceback
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
 
 base_url = "https://lordofthemysteries.fandom.com/wiki/"
+url_list_path = Path(__file__).resolve().parent / "url_list.json"
 
 error_urls = set()
 went_through = set()
@@ -40,6 +42,3 @@ def get_category_member(url, info):
         print(f"Exception message: {e}")
         print("Traceback:")
         traceback.print_exc()
-
-
-get_category_member("Category:Pathways", {})
