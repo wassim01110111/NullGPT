@@ -230,8 +230,10 @@ for url in specific_urls:
     went_through.add(url)
 
 for cat in url_cats:
+    cat_url = url_cats[cat]["url"]
+    went_through.add(cat_url)
     get_category_member(
-        url=url_cats[cat]["url"],
+        url=cat_url,
         info={
             "exact_chapter": url_cats[cat]["exact_chapter"],
             "chapter_range": url_cats[cat]["chapter_range"],
