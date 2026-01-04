@@ -1,5 +1,9 @@
 import json
+import traceback
 from urllib.parse import urlparse
+
+import requests
+from bs4 import BeautifulSoup
 
 end_lotm = 1394
 lotm_timestamps = [213, 482, 732, 946, 1150, 1266, 1353, end_lotm]
@@ -126,6 +130,7 @@ specific_urls = {
 }
 # keeping track of the urls scraped to avoid duplicates and time loss
 went_through = set()
+error_urls = set()
 
 
 def url_cleaning(url):
@@ -136,3 +141,26 @@ def url_cleaning(url):
 
     parsed = urlparse(url)
     return parsed.path
+
+
+def get_category_member(url, info):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+
+        soup = BeautifulSoup(response.text, "html.parser")
+        links = soup.find_all("a", class_="category-page__member-link")
+
+        for link in links:
+            if link.has_attr("href"):
+                link_href = link["href"].replace("/wiki/", "")
+                if link_href not in went_through:
+                    went_through.add(link_href)
+
+    except Exception as e:
+        error_urls.add(url)
+        print(f"\n❌ Error while processing URL: {url}")
+        print(f"Exception type: {type(e).__name__}")
+        print(f"Exception message: {e}")
+        print("Traceback:")
+        traceback.print_exc()
