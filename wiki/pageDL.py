@@ -7,9 +7,7 @@ import requests
 
 url_list_path = Path(__file__).resolve().parent / "url_list.json"
 base_url = "https://lordofthemysteries.fandom.com/wiki/"
-download_folder = Path(
-    r"C:\Users\layac\Videos\Captures\to delete\projects\NullGPT_HTML"
-)
+download_folder = Path(r"")
 
 
 def sanitize_filename(name: str) -> str:
