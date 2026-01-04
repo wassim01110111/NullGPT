@@ -21,8 +21,18 @@ def get_category_member(url, info):
             if link.has_attr("href"):
                 link_href = link["href"].replace("/wiki/", "")
                 if link_href not in went_through:
+                    print(link_href)
                     went_through.add(link_href)
-
+        next_page = soup.find(
+            "a",
+            attrs={
+                "class": "category-page__pagination-next wds-button wds-is-secondary"
+            },
+        )
+        if next_page and next_page.has_attr("href"):
+            next_href = next_page["href"].replace(base_url, "")
+            print("next_href found", next_href)
+            return get_category_member(next_href, info)
     except Exception as e:
         error_urls.add(url)
         print(f"\n❌ Error while processing URL: {url}")
@@ -30,3 +40,6 @@ def get_category_member(url, info):
         print(f"Exception message: {e}")
         print("Traceback:")
         traceback.print_exc()
+
+
+get_category_member("Category:Book_One_Characters", {})

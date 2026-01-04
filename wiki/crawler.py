@@ -206,6 +206,16 @@ def get_category_member(url, info):
                 if link_href not in went_through:
                     went_through.add(link_href)
 
+        next_page = soup.find(
+            "a",
+            attrs={
+                "class": "category-page__pagination-next wds-button wds-is-secondary"
+            },
+        )
+        if next_page and next_page.has_attr("href"):
+            next_href = next_page["href"].replace(base_url, "")
+            return get_category_member(url=next_href, info=info)
+
     except Exception as e:
         error_urls.add(url)
         print(f"\n❌ Error while processing URL: {url}")
