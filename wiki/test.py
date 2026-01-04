@@ -42,4 +42,4 @@ def get_category_member(url, info):
         traceback.print_exc()
 
 
-get_category_member("Category:Book_One_Characters", {})
+get_category_member("Category:Pathways", {})

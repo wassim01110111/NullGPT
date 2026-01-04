@@ -50,67 +50,55 @@ url_cats = {
         "url": "Category:Organizations",
         "exact_chapter": None,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "items": {
         "url": "Category:Items",
         "exact_chapter": None,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "terminology": {
         "url": "Category:Terminology",
         "exact_chapter": None,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "locations": {
         "url": "Category:Location",
         "exact_chapter": None,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "characters": {
         "url": "Category:Characters",
         "exact_chapter": None,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "book_one_content": {
         "url": "Category:Book_One_Content",
         "exact_chapter": end_sidestories,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "book_two_content": {
         "url": "Category:Book_Two_Content",
         "exact_chapter": end_coi,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "alive": {
         "url": "Category:Alive",
         "exact_chapter": end_coi,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "deceased": {
         "url": "Category:Deceased",
         "exact_chapter": end_coi,
         "chapter_range": None,
-        "exclusions": set(),
     },
     "pathways": {
         "url": "Category:Pathways",
         "exact_chapter": end_coi,
         "chapter_range": None,
-        "exclusions": set(),
     },
 }
 
 exclusion_urls = set()  # urls that shouldn't get scraped
-with open("url_list.json", "r", encoding="utf-8") as f:
-    url_list = json.load(f)
 
 
 specific_urls = {
@@ -190,6 +178,12 @@ specific_urls = {
 # keeping track of the urls scraped to avoid duplicates and time loss
 went_through = set()
 error_urls = set()
+with open("url_list.json", "r", encoding="utf-8") as f:
+    url_list = json.load(f) | specific_urls
+
+
+def url_list_update(url, info):
+    url_list[url] = info
 
 
 def get_category_member(url, info):
@@ -205,6 +199,10 @@ def get_category_member(url, info):
                 link_href = link["href"].replace("/wiki/", "")
                 if link_href not in went_through:
                     went_through.add(link_href)
+                    if link_href.startswith("Category:"):
+                        get_category_member(link_href)
+                    else:
+                        url_list_update(url=link_href, info=info)
 
         next_page = soup.find(
             "a",
@@ -223,3 +221,19 @@ def get_category_member(url, info):
         print(f"Exception message: {e}")
         print("Traceback:")
         traceback.print_exc()
+
+
+for url in specific_urls:
+    went_through.add(url)
+
+for cat in url_cats:
+    get_category_member(
+        url=url_cats[cat]["url"],
+        info={
+            "exact_chapter": url_cats[cat]["exact_chapter"],
+            "chapter_range": url_cats[cat]["chapter_range"],
+        },
+    )
+
+with open("url_list.json", "w", encoding="utf-8") as f:
+    json.dump(url_list, f, ensure_ascii=False, indent=2)
