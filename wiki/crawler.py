@@ -34,6 +34,60 @@ url_cats = {
         "chapter_range": None,
         "exclusions": set(),
     },
+    "organizations":{
+        "url": "Category:Organizations",
+        "exact_chapter": None,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
+    "items":{
+        "url": "Category:Items",
+        "exact_chapter": None,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
+    "terminology":{
+        "url": "Category:Terminology",
+        "exact_chapter": None,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
+    "locations":{
+        "url": "Category:Location",
+        "exact_chapter": None,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
+    "characters":{
+        "url": "Category:Characters",
+        "exact_chapter": None,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
+    "book_one_content":{
+        "url": "Category:Book_One_Content",
+        "exact_chapter": end_sidestories,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
+    "book_two_content":{
+        "url": "Category:Book_Two_Content",
+        "exact_chapter": end_coi,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
+    "alive":{
+        "url": "Category:Alive",
+        "exact_chapter": end_coi,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
+    "deceased":{
+        "url": "Category:Deceased",
+        "exact_chapter": end_coi,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
 }
 
 specific_urls = {
