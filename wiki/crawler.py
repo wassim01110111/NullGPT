@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 end_lotm = 1394
 lotm_timestamps = [213, 482, 732, 946, 1150, 1266, 1353, end_lotm]
 end_sidestories = 1445
@@ -12,6 +14,7 @@ coi_timestamps = [
     end_sidestories + 1115,
     end_sidestories + end_coi,
 ]
+
 base_url = "https://lordofthemysteries.fandom.com/wiki/"
 url_cats = {
     "wechat": {
@@ -114,3 +117,13 @@ specific_urls = {
 }
 # keeping track of the urls scraped to avoid duplicates and time loss
 went_through = set()
+
+
+def url_cleaning(url):
+    if url.startswith(base_url):
+        url = url[len(base_url) :]
+    else:  # for urls that aren't wiki links
+        print("not a wiki url", url)
+
+    parsed = urlparse(url)
+    return parsed.path
