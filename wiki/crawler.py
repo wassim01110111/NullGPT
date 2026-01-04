@@ -12,7 +12,7 @@ coi_timestamps = [
     end_sidestories + 884,
     end_sidestories + 1034,
     end_sidestories + 1115,
-    end_sidestories + end_coi,
+    end_coi,
 ]
 
 base_url = "https://lordofthemysteries.fandom.com/wiki/"
