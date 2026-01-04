@@ -101,6 +101,12 @@ url_cats = {
         "chapter_range": None,
         "exclusions": set(),
     },
+    "pathways": {
+        "url": "Category:Pathways",
+        "exact_chapter": end_coi,
+        "chapter_range": None,
+        "exclusions": set(),
+    },
 }
 
 exclusion_urls = set()  # urls that shouldn't get scraped
