@@ -5,9 +5,11 @@ from pathlib import Path
 
 import requests
 
-url_list_path = Path(__file__).resolve().parent / "url_list.json"
+directory = Path(__file__).resolve().parent
+url_list_path = directory / "url_list.json"
 base_url = "https://lordofthemysteries.fandom.com/wiki/"
-download_folder = Path(r"")
+download_folder = directory.parent.parent / "NullGPT_HTML"
+download_folder.mkdir(parents=True, exist_ok=True)
 
 
 def sanitize_filename(name: str) -> str:
