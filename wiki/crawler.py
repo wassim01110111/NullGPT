@@ -114,6 +114,10 @@ specific_urls = {
         "exact_chapter": coi_timestamps[7],
         "chapter_range": None,
     },
+    'Bilibili_LOTM-related_Content_Creator_"Chu_Zhaolan"_-_100,000_subscriber_special_video_-_I%27ve_interviewed_Cuttlefish': {
+        "exact_chapter": coi_timestamps[5],
+        "chapter_range": None,
+    },
 }
 # keeping track of the urls scraped to avoid duplicates and time loss
 went_through = set()
