@@ -41,6 +41,7 @@ url_cats = {
     },
 }
 
+exclusion_urls = set()  # urls that shouldn't get scraped
 specific_urls = {
     "An_Ordinary_Person%27s_Daily_Life_(Side_Story)": {
         "exact_chapter": end_sidestories,
@@ -111,3 +112,5 @@ specific_urls = {
         "chapter_range": None,
     },
 }
+# keeping track of the urls scraped to avoid duplicates and time loss
+went_through = set()
