@@ -1,6 +1,5 @@
 import json
 import traceback
-from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -191,16 +190,6 @@ specific_urls = {
 # keeping track of the urls scraped to avoid duplicates and time loss
 went_through = set()
 error_urls = set()
-
-
-def url_cleaning(url):
-    if url.startswith(base_url):
-        url = url[len(base_url) :]
-    else:  # for urls that aren't wiki links
-        print("not a wiki url", url)
-
-    parsed = urlparse(url)
-    return parsed.path
 
 
 def get_category_member(url, info):
