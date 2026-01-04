@@ -203,7 +203,7 @@ def get_category_member(url, info):
                 if link_href not in went_through:
                     went_through.add(link_href)
                     if link_href.startswith("Category:"):
-                        get_category_member(link_href)
+                        get_category_member(url=link_href, info=info)
                     else:
                         url_list_update(url=link_href, info=info)
 
