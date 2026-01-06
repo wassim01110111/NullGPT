@@ -2,6 +2,7 @@ import json
 import traceback
 
 from bs4 import BeautifulSoup
+from crawler import end_sidestories
 from pageDL import html_folder, sanitize_filename, url_list_path
 
 not_support_html = set()
@@ -10,7 +11,10 @@ DEBUG = True
 fake_categories = {"test"}
 error_html = set()
 soup = None
-
+context_hrefs = {
+    "/wiki/Lord_of_Mysteries_(Novel)": 0,
+    "/wiki/Circle_of_Inevitability_(Novel)": end_sidestories,
+}
 
 with open(url_list_path, "r", encoding="utf-8") as f:
     url_list = json.load(f)
@@ -50,18 +54,33 @@ def clean_references(el):
     for ref in el.find_all("sup", class_="reference"):
         a_tag = ref.find("a", href=True)
         if not a_tag:
-            unsupported(f"something wrong with this ref {el}")
+            unsupported(f"something wrong with this ref {el} 1")
         ref_id = a_tag["href"].lstrip("#")
         li_ref = soup.find("li", id=ref_id)
         ref_span = li_ref.find("span", class_="reference-text")
-        input(ref_span.get_text(strip=True))
+        ref_source = ref_span.find("a")["href"]
+        print(ref_span)
+        chapter_span = ref_span.find_all("span")[-1].get_text(strip=True)
+        print(chapter_span)
+        if ref_source in context_hrefs and chapter_span:
+            references.add(
+                context_hrefs[ref_source]
+                + int("".join(filter(str.isdigit, chapter_span)))
+            )
+        else:
+            print(ref_source, chapter_span)
+            unsupported(f"something wrong with this ref {el} 2")
         ref.decompose()
+    if references:
+        print(el, references)
+        input()
     return el, references
 
 
 def get_headline(h2):
     headline = h2.find("span", class_="mw-headline")
-    return clean_references(headline).get_text(strip=True)
+    headline, ref = clean_references(headline)
+    return headline.get_text(strip=True), ref
 
 
 def page_analysis(url):
@@ -118,4 +137,4 @@ def main():
 
 
 if __name__ == "__main__":
-    page_analysis("Roselle_Gustav")
+    page_analysis("Trier")
