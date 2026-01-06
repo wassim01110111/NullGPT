@@ -230,23 +230,27 @@ def get_category_member(url, info):
         traceback.print_exc()
 
 
-for url in specific_urls:
-    went_through.add(url)
+def main():
+    for url in specific_urls:
+        went_through.add(url)
+
+    for cat in url_cats:
+        cat_url = url_cats[cat]["url"]
+        went_through.add(cat_url)
+        get_category_member(
+            url=cat_url,
+            info={
+                "exact_chapter": url_cats[cat]["exact_chapter"],
+                "chapter_range": url_cats[cat]["chapter_range"],
+            },
+        )
+
+    with open(url_list_path, "w", encoding="utf-8") as f:
+        json.dump(url_list, f, ensure_ascii=False, indent=2)
+
+    for e_url in error_urls:
+        print(e_url)
 
 
-for cat in url_cats:
-    cat_url = url_cats[cat]["url"]
-    went_through.add(cat_url)
-    get_category_member(
-        url=cat_url,
-        info={
-            "exact_chapter": url_cats[cat]["exact_chapter"],
-            "chapter_range": url_cats[cat]["chapter_range"],
-        },
-    )
-
-with open(url_list_path, "w", encoding="utf-8") as f:
-    json.dump(url_list, f, ensure_ascii=False, indent=2)
-
-for e_url in error_urls:
-    print(e_url)
+if __name__ == "__main__":
+    main()
