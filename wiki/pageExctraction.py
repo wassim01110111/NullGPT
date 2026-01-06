@@ -56,7 +56,7 @@ def clean_references(el):
         ref_span = li_ref.find("span", class_="reference-text")
         input(ref_span.get_text(strip=True))
         ref.decompose()
-    return el
+    return el, references
 
 
 def get_headline(h2):
@@ -86,7 +86,7 @@ def page_analysis(url):
             for el in elements:
                 if el.get_text(strip=True):
                     if el.name == "h2":
-                        sub_category = get_headline(el)
+                        sub_category, headline_ref = get_headline(el)
                     elif el.name == "p":
                         if sub_category:
                             paragraph_analysis(
